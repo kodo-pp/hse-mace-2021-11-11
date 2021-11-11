@@ -12,6 +12,7 @@ def parse_args():
     ap.add_argument('--plot-norm', action='store_true', help='Enable 2D norm plot')
     ap.add_argument('--errors', action='store_true', help='Values are deviations from the equilibrium')
     ap.add_argument('--controls', action='store_true', help='Values are active control values')
+    ap.add_argument('--output', type=str, help='Output file')
     return ap.parse_args()
 
 def parse_quad(quad_str):
@@ -61,7 +62,7 @@ def main():
         index += 1
         ax = fig.add_subplot(num_rows, 1, index, projection='3d')
         for j, history in enumerate(histories):
-            ax.plot(history[f'{y}1'], history[f'{y}2'], history[f'{y}3'])
+            ax.plot(history[f'{y}1'], history[f'{y}2'], history[f'{y}3'], linewidth=1)
         ax.set_xlabel(f'${x}_1$')
         ax.set_ylabel(f'${x}_2$')
         ax.set_zlabel(f'${x}_3$')
@@ -90,7 +91,7 @@ def main():
         ax.set_xlabel('$t$')
         ax.set_ylabel(f'$\\Vert {x}(t)\\Vert$')
 
-    plt.show()
+    plt.savefig(args.output, format='png')
 
 if __name__ == '__main__':
     main()
